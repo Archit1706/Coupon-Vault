@@ -7,6 +7,7 @@ import Script from "next/script";
 import Footer from "components/Footer";
 // import { Roboto } from "@next/font/google";
 import { name } from "../../staticProducts";
+import Providers from "../../components/Providers";
 
 // const roboto = Roboto({
 //   subsets: ["latin"],
@@ -37,7 +38,9 @@ export default async function RootLayout({
                 <div className="fixed w-screen bg-white dark:bg-[#05091a] z-10">
                     <Navbar session={session} />
                 </div>
-                <div className="h-screen">{children}</div>
+                <div className="h-screen">
+                    <Providers>{children}</Providers>
+                </div>
                 <div className="w-screen  bg-white dark:bg-[#05091a] z-10">
                     {/* <Footer /> */}
                 </div>

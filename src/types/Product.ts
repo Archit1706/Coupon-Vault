@@ -1,8 +1,9 @@
 type Product = {
+    skuId: number;
     name: string;
     price: number;
     description: string;
-    image: string;
+    image: any;
     category: string;
     subcategory?: string;
     discountedPrice?: number;

@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState, useContext } from "react";
 import "./Checkout.css";
 import Coupon from "@/types/Coupon";
 import Product from "@/types/Product";
+import { prods } from "staticProducts";
+import { AppContext } from "../../context/AppContext";
 
 interface CheckoutProps {
     coupon: Coupon[];
@@ -9,42 +12,23 @@ interface CheckoutProps {
 }
 
 const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
-    const [couponCode, setCouponCode] = React.useState("");
-    const [couponDiscount, setCouponDiscount] = React.useState(0);
-    const [couponDiscountType, setCouponDiscountType] = React.useState("");
-    const [couponDiscountValue, setCouponDiscountValue] = React.useState(0);
-    const [couponDiscountedPrice, setCouponDiscountedPrice] = React.useState(0);
-    const [couponDiscountedPriceWithTax, setCouponDiscountedPriceWithTax] =
-        React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShipping,
-        setCouponDiscountedPriceWithTaxAndShipping,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandling,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandling,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscount,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscount,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCoupon,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCoupon,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndReward,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndReward,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndRewardAndReward,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndRewardAndReward,
-    ] = React.useState(0);
-    const [
-        couponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndRewardAndRewardAndReward,
-        setCouponDiscountedPriceWithTaxAndShippingAndHandlingAndDiscountAndCouponAndRewardAndRewardAndReward,
-    ] = React.useState(0);
-
+    const {
+        context,
+        data,
+        couponCode,
+        setCouponCode,
+        coupons,
+        setCoupons,
+        campaign,
+        setCampaign,
+        discount,
+        setDiscount,
+        total,
+        setTotal,
+        couponValid,
+        setCouponValid,
+    } = useContext(AppContext);
+    console.log(data);
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
             <div className="px-5">
@@ -71,7 +55,7 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                     </a>{" "}
                     /{" "}
                     <a
-                        href="#"
+                        href="/user/cart"
                         className="focus:outline-none hover:underline text-gray-500"
                     >
                         Cart
@@ -83,30 +67,41 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                 <div className="w-full">
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
-                            <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                <div className="w-full flex items-center">
-                                    <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                        <img
-                                            src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                                            alt=""
-                                        />
+                            {products.map((product) => {
+                                return (
+                                    <div
+                                        key={product.skuId}
+                                        className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6"
+                                    >
+                                        <div className="w-full flex items-center">
+                                            <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                                <img
+                                                    src={product.image.src}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div className="flex-grow pl-3">
+                                                <h6 className="font-semibold uppercase text-gray-600">
+                                                    {product.name}
+                                                </h6>
+                                                <p className="text-gray-400">
+                                                    <button>-</button>
+                                                    {""}
+                                                    <button>+</button>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-600 text-xl">
+                                                    ₹{product.price}
+                                                </span>
+                                                <span className="font-semibold text-gray-600 text-sm">
+                                                    .00
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="flex-grow pl-3">
-                                        <h6 className="font-semibold uppercase text-gray-600">
-                                            Apple
-                                        </h6>
-                                        <p className="text-gray-400">x 1</p>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold text-gray-600 text-xl">
-                                            ₹210
-                                        </span>
-                                        <span className="font-semibold text-gray-600 text-sm">
-                                            .00
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                                );
+                            })}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -118,11 +113,20 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                                                 className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                                                 placeholder="XXXXXX"
                                                 type="text"
+                                                value={couponCode}
+                                                onChange={(e) =>
+                                                    setCouponCode(
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
                                         </div>
                                     </div>
                                     <div className="px-2">
-                                        <button className="block w-full max-w-xs mx-auto border border-transparent bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold">
+                                        <button
+                                            className="block w-full max-w-xs mx-auto border border-transparent bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold cursor-pointer disabled:cursor-not-allowed"
+                                            disabled={couponCode.length === 0}
+                                        >
                                             APPLY
                                         </button>
                                     </div>
@@ -137,7 +141,7 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                                     </div>
                                     <div className="pl-3">
                                         <span className="font-semibold">
-                                            ₹190.91
+                                            ₹{total}
                                         </span>
                                     </div>
                                 </div>
@@ -149,10 +153,25 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                                     </div>
                                     <div className="pl-3">
                                         <span className="font-semibold">
-                                            ₹19.09
+                                            ₹{total * 0.18}
                                         </span>
                                     </div>
                                 </div>
+
+                                {couponValid && (
+                                    <div className="w-full flex items-center">
+                                        <div className="flex-grow">
+                                            <span className="text-gray-600">
+                                                Discount
+                                            </span>
+                                        </div>
+                                        <div className="pl-3">
+                                            <span className="font-semibold">
+                                                ₹{discount}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="mb-6 pb-6 border-b border-gray-200 md:border-none text-gray-800 text-xl">
                                 <div className="w-full flex items-center">
@@ -166,7 +185,7 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                                             INR
                                         </span>{" "}
                                         <span className="font-semibold">
-                                            ₹210.00
+                                            ₹{total + total * 0.18 - discount}
                                         </span>
                                     </div>
                                 </div>
