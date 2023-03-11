@@ -24,6 +24,8 @@ const SkuCard = (props: Props) => {
     <div className="bg-white shadow-md rounded-md flex flex-row overflow-hidden dark:bg-gray-800 card-zoom1 justify-between">
       <Image
         className="w-[150px] h-[200px] object-cover"
+        width={150}
+        height={200}
         src={product.image.src}
         alt={`Product ${product.name}`}
       />

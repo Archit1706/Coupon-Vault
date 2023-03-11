@@ -1,5 +1,6 @@
 import React from "react";
 import { prods } from "../staticProducts";
+import Image from "next/image";
 type Props = {};
 
 const Sku = ({ params }) => {
@@ -10,9 +11,12 @@ const Sku = ({ params }) => {
   return (
     <div>
       <div className="flex flex-col items-center ">
-        <img
+        <Image
           src={im.src}
+          width={40}
+          height={100}
           className="w-40 h-100 border-4 border-white rounded-full "
+          alt={`Product ${im.name}`}
         />
 
         <h1 className="justify-start p-2">
