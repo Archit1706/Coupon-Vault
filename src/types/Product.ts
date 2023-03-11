@@ -8,6 +8,7 @@ type Product = {
     subcategory?: string;
     discountedPrice?: number;
     discount?: number;
+    quantity?: number;
 };
 
 export default Product;

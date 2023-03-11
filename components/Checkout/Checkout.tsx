@@ -5,12 +5,19 @@ import Coupon from "@/types/Coupon";
 import Product from "@/types/Product";
 import { prods } from "staticProducts";
 import { AppContext } from "../../context/AppContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CheckoutProps {
     products: Product[];
 }
 
 const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log(e.target);
+        console.log("The link was clicked.");
+    };
     const {
         context,
         data,
@@ -29,8 +36,10 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
     } = useContext(AppContext);
     console.log(data);
 
+    const notify = () => toast("Wow so easy!");
+
     useEffect(() => {
-        setTotal(props.products.reduce((a, b) => a + b.price, 0));
+        setTotal(props.products.reduce((a, b) => a + b.quantity * b.price, 0));
     }, []);
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
@@ -83,14 +92,28 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                     alt=""
                                                 />
                                             </div>
-                                            <div className="flex-grow pl-3">
+                                            <div className="flex-grow pl-3 gap-2 justify-center items-center">
                                                 <h6 className="font-semibold uppercase text-gray-600">
                                                     {product.name}
                                                 </h6>
                                                 <p className="text-gray-400">
-                                                    <button>-</button>
-                                                    {""}
-                                                    <button>+</button>
+                                                    <button
+                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee px-2 m-2 rounded-md"
+                                                        onClick={() =>
+                                                            (product.quantity -= 1)
+                                                        }
+                                                    >
+                                                        -
+                                                    </button>
+                                                    {product.quantity}
+                                                    <button
+                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee px-2 m-2 rounded-md"
+                                                        onClick={() =>
+                                                            (product.quantity += 1)
+                                                        }
+                                                    >
+                                                        +
+                                                    </button>
                                                 </p>
                                             </div>
                                             <div>
@@ -105,6 +128,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </div>
                                 );
                             })}
+                            {couponValid && (
+                                <p className="">
+                                    The Code is applied successfully!
+                                </p>
+                            )}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -128,7 +156,17 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     <div className="px-2">
                                         <button
                                             className="block w-full max-w-xs mx-auto border border-transparent bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold cursor-pointer disabled:cursor-not-allowed"
-                                            disabled={couponCode.length === 0}
+                                            disabled={
+                                                couponCode &&
+                                                couponCode?.length === 0
+                                            }
+                                            title={
+                                                couponCode &&
+                                                couponCode?.length === 0
+                                                    ? "Enter a coupon code"
+                                                    : "Get discount!"
+                                            }
+                                            onClick={handleClick}
                                         >
                                             APPLY
                                         </button>
@@ -156,7 +194,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </div>
                                     <div className="pl-3">
                                         <span className="font-semibold">
-                                            ₹{total * 0.18}
+                                            ₹{(total * 0.18).toFixed(2)}
                                         </span>
                                     </div>
                                 </div>
@@ -170,7 +208,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                         </div>
                                         <div className="pl-3">
                                             <span className="font-semibold">
-                                                ₹{discount}
+                                                ₹{discount.toFixed(2)}
                                             </span>
                                         </div>
                                     </div>
@@ -188,7 +226,12 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             INR
                                         </span>{" "}
                                         <span className="font-semibold">
-                                            ₹{total + total * 0.18 - discount}
+                                            ₹
+                                            {(
+                                                total +
+                                                total * 0.18 -
+                                                discount
+                                            ).toFixed(2)}
                                         </span>
                                     </div>
                                 </div>
