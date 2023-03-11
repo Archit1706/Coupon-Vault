@@ -11,7 +11,7 @@ export const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [data, setData] = useState("Parteek");
 
-  // const [couponCode, setCouponCode] = useState < Coupon > ([]);
+  const [couponCode, setCouponCode] = useState([]);
   const [couponValid, setCouponValid] = useState(false);
 
   const [discount, setDiscount] = useState(0);
@@ -48,10 +48,10 @@ const AppProvider = ({ children }) => {
         price,
         setPrice,
         discouuntedPrice,
-        coupons,
-        setCoupons,
-        campaigns,
-        setCampaigns,
+        // coupons,
+        // setCoupons,
+        // campaigns,
+        // setCampaigns,
         products1,
         products2,
         products3,
