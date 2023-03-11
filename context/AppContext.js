@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { prods } from 'staticProducts';
-import Coupon from "@/types/Coupon";
-import Product from "@/types/Product";
+// import Coupon from "@/types/Coupon";
+// import Product from "@/types/Product";
 
 
 export const AppContext = React.createContext();
-import { getCoupons, getCampaigns } from "./apis";
+// import { getCoupons, getCampaigns } from "./apis";
 
 const AppProvider = ({ children }) => {
   const [data, setData] = useState("Parteek");
 
-  const [couponCode, setCouponCode] = useState < Coupon > ([]);
+  // const [couponCode, setCouponCode] = useState < Coupon > ([]);
   const [couponValid, setCouponValid] = useState(false);
 
   const [discount, setDiscount] = useState(0);
@@ -21,9 +21,9 @@ const AppProvider = ({ children }) => {
   const [price, setPrice] = useState(getTotal(products));
   const discouuntedPrice = price - discount;
 
-  const [coupons, setCoupons] = useState(getCoupons());
+  // const [coupons, setCoupons] = useState(getCoupons());
 
-  const [campaigns, setCampaigns] = useState(getCampaigns());
+  // const [campaigns, setCampaigns] = useState(getCampaigns());
 
 
   const [products1, setproducts1] = useState(
@@ -39,8 +39,6 @@ const AppProvider = ({ children }) => {
       value={{
         data,
         setData,
-        couponCode,
-        setCouponCode,
         couponValid,
         setCouponValid,
         discount,

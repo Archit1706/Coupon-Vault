@@ -5,15 +5,13 @@ type Props = {};
 
 const CouponCard = (props: Props) => {
 
-const coupons = "123213"
-
 return (
 
 
   <div className="bg-white rounded-lg shadow-md p-4 card-zoom1">
     <div className="flex items-center mb-4">
       <RiCoupon4Fill className="text-green-400" />
-      <Link href={`merchant/coupons/${coupons}`}>  <h3 className="text-lg font-semibold text-gray-800">H12312-123210-xl</h3></Link>
+      <Link href={`merchant/coupons/`}>  <h3 className="text-lg font-semibold text-gray-800">H12312-123210-xl</h3></Link>
     
     </div>
     <div className="flex justify-between items-center">
