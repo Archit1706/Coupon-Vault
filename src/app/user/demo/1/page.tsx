@@ -1,7 +1,11 @@
-import React, { useContext } from "react";
+"use client";
+import React, { useState } from "react";
 import Checkout from "components/Checkout/Checkout";
 import { prods } from "staticProducts";
-import { AppContext } from "context/AppContext";
+
+import banana from "assets/products/banana.jpeg";
+import apple from "assets/products/apple.jpeg";
+import oranges from "assets/products/oranges.jpeg";
 
 const coupon = [
     {
@@ -33,10 +37,39 @@ const coupon = [
 // const products =
 
 const page = () => {
-    const products1 = prods.filter((p) => p.category === "Fruits");
+    const [products1Data, setProducts1Data] = useState([
+        {
+            skuId: 1,
+            name: "Banana",
+            category: "Fruits",
+            description: "A sweet, yellow fruit with a soft texture.",
+            price: 59,
+            image: banana,
+            quantity: 1,
+        },
+        {
+            skuId: 11,
+            name: "Apple",
+            category: "Fruits",
+            description:
+                "A round fruit with firm, juicy flesh and typically red, yellow, or green skin. Apples are high in fiber, vitamin C, and various antioxidants.",
+            price: 83,
+            image: apple,
+            quantity: 2,
+        },
+        {
+            skuId: 18,
+            name: "Oranges",
+            category: "Fruits",
+            description: "A sweet, juicy fruit that is high in vitamin C.",
+            price: 67,
+            image: oranges,
+            quantity: 1,
+        },
+    ]);
     return (
         <div>
-            <Checkout products={products1} />
+            <Checkout products={products1Data} />
         </div>
     );
 };
