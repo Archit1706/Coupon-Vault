@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Checkout.css";
 import Coupon from "@/types/Coupon";
 import Product from "@/types/Product";
-import { prods } from "staticProducts";
+import { campaigns, prods } from "staticProducts";
 import { AppContext } from "../../context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,11 +13,7 @@ interface CheckoutProps {
 }
 
 const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
-    const handleClick = (e) => {
-        e.preventDefault();
-        console.log(e.target);
-        console.log("The link was clicked.");
-    };
+    const BASE_URL = "http://localhost:3000";
     const {
         context,
         data,
@@ -34,7 +30,40 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
         couponValid,
         setCouponValid,
     } = useContext(AppContext);
-    console.log(data);
+    // console.log(data);
+
+    const handleClick = (e: any) => {
+        e.preventDefault();
+        if (couponCode.length < 0) {
+            alert("Please enter a coupon code.");
+            setCouponValid(false);
+        } else {
+            try {
+                fetch(`${BASE_URL}/api/coupon/` + couponCode)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.length > 0) {
+                            setCoupons(data);
+                            setCouponValid(true);
+                            console.log("Coupon Valid");
+                            console.log(data);
+                            console.log(coupons);
+                        } else {
+                            alert("Invalid coupon code.");
+                            setCouponValid(false);
+                            console.log("Coupon Invalid");
+                        }
+                    });
+            } catch (err) {
+                alert("Invalid coupon code.");
+                console.log(err);
+                setCouponValid(false);
+                console.log("Coupon Invalid");
+            }
+        }
+        console.log(e.target);
+        console.log("The link was clicked.");
+    };
 
     const notify = () => toast("Wow so easy!");
 
@@ -93,9 +122,14 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                 />
                                             </div>
                                             <div className="flex-grow pl-3 gap-2 justify-center items-center">
-                                                <h6 className="font-semibold uppercase text-gray-600">
-                                                    {product.name}
-                                                </h6>
+                                                <div className="flex justify-start items-center flex-row gap-2">
+                                                    <h6 className="font-semibold uppercase text-gray-600">
+                                                        {product.name}
+                                                    </h6>
+                                                    <p>{"-"}</p>
+                                                    <p> {product.category}</p>
+                                                </div>
+
                                                 <p className="text-gray-400">
                                                     <button
                                                         className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee px-2 m-2 rounded-md"
@@ -133,6 +167,48 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     The Code is applied successfully!
                                 </p>
                             )}
+                            <div className="">
+                                <table className="w-full">
+                                    <th>Title</th>
+                                    <th>Discount</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                    {campaigns.map((campaign) => {
+                                        return (
+                                            <tr key={campaign.id}>
+                                                <td>{campaign.title}</td>
+                                                {campaign.discountType === 1 ? (
+                                                    <td>
+                                                        {
+                                                            campaign.discount[
+                                                                "$numberInt"
+                                                            ]
+                                                        }
+                                                    </td>
+                                                ) : campaign.discountType ===
+                                                  2 ? (
+                                                    <td>
+                                                        {
+                                                            campaign
+                                                                .discountPect[
+                                                                "$numberInt"
+                                                            ]
+                                                        }
+                                                    </td>
+                                                ) : (
+                                                    <td>{"Free Item"}</td>
+                                                )}
+                                                <td>{campaign.description}</td>
+                                                <td>
+                                                    <button className="text-gray-200 bg-blue-500 font-bold text-xl p-4 rounded-md shadow-md">
+                                                        Apply
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </table>
+                            </div>
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -155,10 +231,10 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </div>
                                     <div className="px-2">
                                         <button
-                                            className="block w-full max-w-xs mx-auto border border-transparent bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold cursor-pointer disabled:cursor-not-allowed"
+                                            className="block w-full max-w-xs mx-auto border border-transparent disabled:bg-gray-400 hover:bg-blue-500 bg-blue-600 focus:bg-gray-500 text-white rounded-md px-5 py-2 font-semibold cursor-pointer disabled:cursor-not-allowed"
                                             disabled={
                                                 couponCode &&
-                                                couponCode?.length === 0
+                                                couponCode.length === 0
                                             }
                                             title={
                                                 couponCode &&
