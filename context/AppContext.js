@@ -9,7 +9,7 @@ export const AppContext = React.createContext();
 import { getCoupons, getCampaigns } from "./apis";
 
 const AppProvider = ({ children }) => {
-  const [data, setData] = useState("Parteek");
+  const [data, setData] = useState("Test Data");
 
   const [couponCode, setCouponCode] = useState([]);
   const [couponValid, setCouponValid] = useState(false);
@@ -21,18 +21,28 @@ const AppProvider = ({ children }) => {
   const [price, setPrice] = useState(getTotal(products));
   const discouuntedPrice = price - discount;
 
+  const [total, setTotal] = useState(0);
+
   // const [coupons, setCoupons] = useState(getCoupons());
 
   // const [campaigns, setCampaigns] = useState(getCampaigns());
 
 
-  const [products1, setproducts1] = useState(
-    prods.filter(product => product.category === "Fruit")
+  const [products1, setProducts1] = useState(
+    prods.filter(item => item.category === "Fruits")
   );
 
-  const [products2, setproducts2] = useState(prods.filter(product => product.category === "Dairy" || product.category === "Grains"));
+  // console.log("products1", products1)
+  const [products2, setProducts2] = useState(prods.filter(item => item.category === "Dairy" || item.category === "Grains"));
+  // console.log(products2)
 
-  const [products3, setproducts3] = useState(prods.filter(product => product.category === "Vegetables"));
+  const [products3, setProducts3] = useState(prods.filter(item => item.category === "Vegetables"));
+
+  // const filteredData = prods.filter(item => item.category === "Fruits");
+
+  // console.log("filteredData", products1)
+
+  // filteredData.forEach(item => console.log(`ID: ${item.skuId}, Name: ${item.name}, Category: ${item.category}`));
 
   return (
     <AppContext.Provider
@@ -55,13 +65,13 @@ const AppProvider = ({ children }) => {
         // campaigns,
         // setCampaigns,
         products1,
-        products2,
-        products3,
-        setproducts1,
-        setproducts2,
-        setproducts3,
-
-
+        // products2,
+        // products3,
+        setProducts1,
+        // setProducts2,
+        // setProducts3,
+        total,
+        setTotal,
       }}
     >
       {children}

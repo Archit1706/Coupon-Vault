@@ -30,11 +30,13 @@ const coupon = [
     },
 ];
 
+// const products =
+
 const page = () => {
-    const { products1, setProducts1 } = useContext(AppContext);
+    const products1 = prods.filter((p) => p.category === "Fruits");
     return (
         <div>
-            <Checkout products={prods.slice(1, 4)} coupon={coupon} />
+            <Checkout products={products1} />
         </div>
     );
 };

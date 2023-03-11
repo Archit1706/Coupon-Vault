@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Checkout.css";
 import Coupon from "@/types/Coupon";
 import Product from "@/types/Product";
@@ -7,11 +7,10 @@ import { prods } from "staticProducts";
 import { AppContext } from "../../context/AppContext";
 
 interface CheckoutProps {
-    coupon: Coupon[];
     products: Product[];
 }
 
-const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
+const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
     const {
         context,
         data,
@@ -29,6 +28,10 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
         setCouponValid,
     } = useContext(AppContext);
     console.log(data);
+
+    useEffect(() => {
+        setTotal(props.products.reduce((a, b) => a + b.price, 0));
+    }, []);
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
             <div className="px-5">
@@ -67,7 +70,7 @@ const Checkout: React.FC<CheckoutProps> = ({ coupon, products }) => {
                 <div className="w-full">
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
-                            {products.map((product) => {
+                            {props.products.map((product) => {
                                 return (
                                     <div
                                         key={product.skuId}

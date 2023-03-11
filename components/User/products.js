@@ -82,7 +82,7 @@
     {
         id: 11,
         name: "Apple",
-        category: "Fruit",
+        category: "Fruits",
         description: "A round fruit with firm, juicy flesh and typically red, yellow, or green skin. Apples are high in fiber, vitamin C, and various antioxidants.",
         price: 0.5,
         image: "https://dummyimage.com/400x400/ff9900/ffffff&text=Apple"
