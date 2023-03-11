@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 // import router from "next/router";
@@ -24,7 +25,7 @@ const page = (props: Props) => {
                                         href={`/user/product/${prod.id}`}
                                         className="block relative h-48 rounded overflow-hidden"
                                     >
-                                        <img
+                                        <Image
                                             alt="ecommerce"
                                             className="object-cover object-center w-full h-full block"
                                             src={prod.image.src}

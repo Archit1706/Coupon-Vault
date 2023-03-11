@@ -7,6 +7,7 @@ import { campaigns, prods } from "staticProducts";
 import { AppContext } from "../../context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 interface CheckoutProps {
     products: Product[];
@@ -116,9 +117,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     >
                                         <div className="w-full flex items-center">
                                             <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                                <img
+                                                <Image
                                                     src={product.image.src}
                                                     alt=""
+                                                    width={64}
+                                                    height={64}
                                                 />
                                             </div>
                                             <div className="flex-grow pl-3 gap-2 justify-center items-center">
@@ -351,9 +354,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                 name="type"
                                                 id="type1"
                                             />
-                                            <img
+                                            <Image
                                                 src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
-                                                className="h-6 ml-3"
+                                                className="h-6 ml-3 aspect-video"
+                                                width={24}
+                                                height={24}
                                             />
                                         </label>
                                     </div>
@@ -488,10 +493,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             name="type"
                                             id="type2"
                                         />
-                                        <img
+                                        <Image
                                             src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg"
                                             width={80}
-                                            className="ml-3"
+                                            height={24}
+                                            className="ml-3 aspect-video"
                                         />
                                     </label>
                                 </div>
@@ -506,10 +512,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             name="type"
                                             id="type2"
                                         />
-                                        <img
+                                        <Image
                                             src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
                                             width={80}
-                                            className="ml-3"
+                                            height={24}
+                                            className="ml-3 aspect-video"
                                         />
                                     </label>
                                 </div>
