@@ -34,8 +34,6 @@ const coupon = [
     },
 ];
 
-// const products =
-
 const page = () => {
     const [products1Data, setProducts1Data] = useState([
         {
