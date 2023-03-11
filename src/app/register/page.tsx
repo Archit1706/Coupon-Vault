@@ -51,7 +51,7 @@ export default function Register() {
           <h1 className="title-font font-medium text-3xl text-gray-900 dark:text-white">
             Setting <span className="text-blue-500">up your Coupons.</span>
           </h1>
-          <button onClick={() => toast("Wow so easy!")}>Notify!</button>
+       
 
           <p className="leading-relaxed mt-4 dark:text-gray-300">
             <Typewriter
