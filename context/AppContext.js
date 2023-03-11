@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { prods } from 'staticProducts';
-import Coupon from "@/types/Coupon";
-import Product from "@/types/Product";
+// import Coupon from "@/types/Coupon";
+// import Product from "@/types/Product";
 
 
 export const AppContext = React.createContext();
-import { getCoupons, getCampaigns } from "./apis";
+// import { getCoupons, getCampaigns } from "./apis";
 
 const AppProvider = ({ children }) => {
   const [data, setData] = useState("Test Data");
@@ -49,8 +49,6 @@ const AppProvider = ({ children }) => {
       value={{
         data,
         setData,
-        couponCode,
-        setCouponCode,
         couponValid,
         setCouponValid,
         discount,

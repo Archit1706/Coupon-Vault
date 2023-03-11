@@ -1,19 +1,14 @@
 import SkuCard from 'components/SkuCard'
 import React from 'react'
-import { skues } from './skues'
+import { prods } from './staticProducts'
 type Props = {}
 
 const SkuIds = (props: Props) => {
   return (
-    <div className='p-2 space-y-5 flex flex-row overflow-scroll' >
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
-        <SkuCard/>
+    <div className='p-2 space-y-5 ' >
+      {prods.map((skue) => (
+        <SkuCard key={skue.skuId} data={skue}/>
+      ))}
     </div>
   )
 }

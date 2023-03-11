@@ -9,7 +9,7 @@ const CampaignsBid = (props: Props) => {
       <div className="">
         <div className="flex flex-col items-center pb-12">
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl pb-4 dark:">Campain Name</p>
+            <p className="text-2xl pb-4 dark:text-white">Campain Name</p>
           </div>
           <p className="text-gray-700">
             Description :Lorem ipsum dolor sit amet, consectetur adipiscing

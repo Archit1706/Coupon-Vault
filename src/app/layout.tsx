@@ -7,7 +7,7 @@ import Script from "next/script";
 import Footer from "components/Footer";
 // import { Roboto } from "@next/font/google";
 import { name } from "../../staticProducts";
-import Providers from "../../components/Providers";
+import Providers from "components/Providers";
 
 // const roboto = Roboto({
 //   subsets: ["latin"],
