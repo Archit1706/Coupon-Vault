@@ -1,6 +1,6 @@
 'use client'
 import React,{useState} from "react";
-
+import Link from "next/link";
 
 type Props = {
   data : Product;
@@ -17,7 +17,7 @@ interface Product {
 }
 const SkuCard = (props: Props) => {
   const product = props.data;
- 
+  
   
 
   return (
@@ -36,7 +36,10 @@ const SkuCard = (props: Props) => {
         <p className="text-gray-700 text-base">SkuId : {product.skuId}</p> */}
       </div>
       <div className="">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">View More</button>
+        <Link href={`/merchant/skues/${product.skuId}`} >
+
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l" >View More</button>
+        </Link>
       </div>
     </div>
   );

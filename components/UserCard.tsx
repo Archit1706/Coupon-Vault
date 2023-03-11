@@ -35,8 +35,8 @@ const userCard = (props: Props) => {
     <div className="bg-white shadow-md rounded-md overflow-hidden dark:bg-gray-800 card-zoom1">
       <div className="p-4">
         <Link href={`/merchant/customers/${data.id}`}>
-          <h3 className="text-lg font-semibold mb-2 dark:text-blue ">
-            {"demo" + data.id}
+          <h3 className="text-lg font-semibold mb-2 text-blue-500 ">
+            {"Demo" + data.id}
           </h3>
         </Link>
         <p className="text-gray-600 mb-2 dark:text-gray-300">
@@ -45,17 +45,17 @@ const userCard = (props: Props) => {
         <div className="mt-4 space-x-2 flex justify-between items-center">
           <div className="text-gray-600">
             <span className="block">Total Spent : Rs. {data.Spent} </span>
-            <span className="block">Total Clusers : {data.Clusters}</span>
+            <span className="block">Cluster No : {data.Clusters}</span>
             <span className="block">
               Customer Since: {nanosecondsToDays(data.Customer_For)} Days
             </span>
           </div>
           <div className="text-gray-600">
             <span className="block">
-              Number of Deals Made: {data.NumDealsPurchases}
+              Number of Deals Used: {data.NumDealsPurchases}
             </span>
             <span className="block">
-              Customer Last Visited: {data.Recency} Minutes Ago
+              Customer Last Visited: {data.Recency} Days Ago
             </span>
             <span className="block">Customer Age: {data.Age} Years</span>
           </div>

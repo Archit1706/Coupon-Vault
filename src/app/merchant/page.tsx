@@ -6,7 +6,7 @@ const Merchant = (props: Props) => {
   return (
     <div>
       <div className="flex flex-col w-full 2xl:w-2/3">
-                <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 ">
+                <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 px-2 pt-2">
                     <h4 className="text-xl text-gray-900 font-bold">Statistics</h4>
                     
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
@@ -32,7 +32,7 @@ const Merchant = (props: Props) => {
                         </div>
                         <div className="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div className="flex items-center justify-between">
-                                <span className="font-bold text-sm text-green-600">New Orders</span>
+                                <span className="font-bold text-sm text-green-600">New Skue/Products</span>
                                 <span className="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
                             </div>
                             <div className="flex items-center justify-between mt-6">
