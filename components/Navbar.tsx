@@ -16,9 +16,9 @@ type Props = {
 const Navbar = ({ session }: Props) => {
     const [currTheme, setcurrTheme] = useState("");
     const router = useRouter();
-    localStorage.setItem("author", session?.user?.name || "");
-    localStorage.setItem("authorImage", session?.user?.image || "");
-    localStorage.setItem("isLoggedIn", session ? "true" : "false");
+    // localStorage.setItem("author", session?.user?.name || "");
+    // localStorage.setItem("authorImage", session?.user?.image || "");
+    // localStorage.setItem("isLoggedIn", session ? "true" : "false");
 
     const clickHandler = () => {
         if (localStorage.theme === "dark") localStorage.theme = "light";
