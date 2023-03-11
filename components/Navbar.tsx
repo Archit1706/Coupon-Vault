@@ -10,10 +10,12 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import Logo from "assets/logo.png";
 import { GiWallet } from "react-icons/gi";
 type Props = {
-    session: Session | null;
+    // session: Session | null;
 };
+const session = null;
 
-const Navbar = ({ session }: Props) => {
+const Navbar = ({ }: Props) => {
+
     const [currTheme, setcurrTheme] = useState("");
     const router = useRouter();
     // localStorage.setItem("author", session?.user?.name || "");

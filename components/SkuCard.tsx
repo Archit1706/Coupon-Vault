@@ -1,7 +1,7 @@
 'use client'
 import React,{useState} from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 type Props = {
   data : Product;
 };
@@ -22,7 +22,7 @@ const SkuCard = (props: Props) => {
 
   return (
     <div className="bg-white shadow-md rounded-md flex flex-row overflow-hidden dark:bg-gray-800 card-zoom1 justify-between">
-      <img
+      <Image
         className="w-[150px] h-[200px] object-cover"
         src={product.image.src}
         alt={`Product ${product.name}`}
