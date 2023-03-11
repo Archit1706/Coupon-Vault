@@ -35,7 +35,7 @@ export default function Layout({ children }) {
         if (path.includes("Coupons")) {
           setActive(1);
         }
-        if (path.includes("Coupons")) {
+        if (path.includes("skues")) {
           setActive(4);
         }
       }, []);
@@ -88,6 +88,21 @@ export default function Layout({ children }) {
               aria-current="page"
             >
              Customers
+            </Link>
+          </li>
+
+          <li className="">
+            <Link
+              onClick={() => setActive(4)}
+              href="/merchant/skues"
+              className={`inline-flex p-4 border-b-2 rounded-t-lg group ${
+                active == 4
+                  ? activeStyle
+                  : "border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              }`}
+              aria-current="page"
+            >
+             Skues/Products
             </Link>
           </li>
         </ul>

@@ -68,6 +68,7 @@ let campaigns = [
     format: "FREE-%%%",
   },
 ];
+
 const Camapins = (props: Props) => {
   return (
     <div className="p-2 space-y-5">
