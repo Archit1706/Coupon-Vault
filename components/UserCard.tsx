@@ -1,24 +1,43 @@
 import React from "react";
 
-type Props = {};
-
+type Props = {
+  data : User;
+};
+interface User {
+  id: number;
+  Income: number;
+  Recency: number;
+  Prod1: number;
+  Prod2: number;
+  Prod3: number;
+  Prod4: number;
+  Prod5: number;
+  Prod6: number;
+  NumDealsPurchases: number;
+  NumWebPurchases: number;
+  NumCatalogPurchases: number;
+  NumStorePurchases: number;
+  NumWebVisitsMonth: number;
+  Customer_For: number,
+  Age: number,
+  Spent: number,
+  Clusters: number
+}
 const userCard = (props: Props) => {
-  const name = "First Name Last Name";
-  const email = "fname@gmail.com";
-  const sourceId = "123456";
-  const createdOn = "Jan 1, 2022";
+  const data = props.data;
+  
   return (
     <div className="bg-white shadow-md rounded-md overflow-hidden dark:bg-gray-800 card-zoom1">
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-2 dark:text-white">{name}</h3>
-        <p className="text-gray-600 mb-2 dark:text-gray-300">{email}</p>
+        <h3 className="text-lg font-semibold mb-2 dark:text-white">{'demo'+data.id}</h3>
+        <p className="text-gray-600 mb-2 dark:text-gray-300">{'demo'+data.id+'@gmail.com'}</p>
         <p className="text-gray-600 mb-2 dark:text-gray-300">
-          Source Id: #{sourceId}
+        Total Spent: Rs.{data.Spent}
         </p>
         <p className="text-gray-600 mb-2 dark:text-gray-300">
-          Created on: {createdOn}
+          Recency: {data.Recency}
         </p>
-        <div className="flex justify-end">
+        <div className="flex  justify-end">
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2 dark:bg-blue-700 dark:hover:bg-blue-800">
             Edit
           </button>
@@ -26,6 +45,7 @@ const userCard = (props: Props) => {
             Delete
           </button>
         </div>
+        
       </div>
     </div>
   );
