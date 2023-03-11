@@ -5,7 +5,7 @@ import { users } from "../customers";
 import Image from "next/image";
 
 type Props = {};
-
+import Image from "next/image";
 const UserProfile = ({ params }) => {
     const bid = params["id"];
     const user = users[bid];
@@ -28,6 +28,9 @@ const UserProfile = ({ params }) => {
                 <Image
                     src={"https://api.multiavatar.com/demo" + bid + ".svg"}
                     className="w-40 border-4 border-white rounded-full"
+                    width={40}
+                    height={100}
+                    alt={`Product ${bid}`}
                 />
                 <div className="flex items-center space-x-2 mt-2">
                     <p className="text-2xl dark:text-white">Demo{bid}</p>

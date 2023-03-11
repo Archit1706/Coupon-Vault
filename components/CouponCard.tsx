@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { RiCoupon4Fill } from "react-icons/ri";
+
 import "flowbite";
 interface Coupon {
   couponCode: string;
