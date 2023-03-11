@@ -3,9 +3,15 @@ import { getServerSession } from "next-auth/next";
 import { getProviders } from "next-auth/react";
 import Navbar from "components/Navbar";
 import Script from "next/script";
-// import Footer from "components/Footer";
+import Footer from "components/Footer";
+import { Roboto } from "@next/font/google";
 import { name } from "../../staticProducts";
 import Providers from "components/Providers";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 export default async function RootLayout({
     children,
