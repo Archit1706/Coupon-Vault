@@ -2,76 +2,34 @@ import Link from "next/link";
 import React from "react";
 import { RiCoupon4Fill } from "react-icons/ri";
 import "flowbite";
-type Props = {};
-const coupon1 = {
-  _id: { $oid: "640b77a52aeee1856cfde1fb" },
-  name: "Hot Promotion",
-  startDate: "2023-03-04",
-  endDate: "Inf",
-  couponCount: "1000",
-  enabled: true,
-  discountType: "1",
-  discount: { $numberInt: "100" },
-  discountPect: { $numberInt: "0" },
-  SKUs: [],
-  conditions: [{ parameter: "cart.value", compare: "greater", value: "999" }],
-  redemption: { $numberInt: "142" },
-  title: "Hot Promotion",
-  desc: "Get flat Rs.100 off on orders above Rs.999",
-  createdAt: { $date: { $numberLong: "1678473125291" } },
-  updatedAt: { $date: { $numberLong: "1678473125291" } },
-  __v: { $numberInt: "0" },
-  format: "HOT-$$$",
+interface Coupon {
+  couponCode: string;
+  creationDate: string;
+  expiryDate: string;
+  discountType: string;
+  discountAmt: number;
+  discountPect: number;
+  discountItem: number;
+  freeItem: string;
+  enabled: boolean;
+  skuIds: string[];
+  conditions: {
+    parameter: string;
+    compare: string;
+    value: string;
+  }[];
+  title: string;
+  desc: string;
+  userLimit: number;
+  format: string;
+}
+
+type Props = {
+  coupon: Coupon;
 };
 
-const dynamic = {
-  customerId: "123",
-  creationDate: "2023-03-11",
-  expiryDate: "2023-04-11",
-  discountType: "1",
-  discount: 20,
-  discountPect: 0,
-  discountItem: 0,
-  freeItem: "",
-  skuIds: [],
-  conditions: [
-    {
-      parameter: "customer.customer_For",
-      compare: "greater",
-      value: 365,
-    },
-  ],
-  campaign: "640c7d435f1d16ba9301f2e1",
-  title: "Loyality Benefit",
-  desc: "20% off on whole cart",
-  enabled: true,
-  redeemed: false,
-  format: "YEAR20-$$$",
-};
-const coupon = {
-  couponCode: "PAYTM500",
-  creationDate: "2023-03-11",
-  expiryDate: "2024-03-11",
-  discountType: "1",
-  discountAmt: 70,
-  discountPect: 0,
-  discountItem: 0,
-  freeItem: "",
-  enabled: true,
-  skuIds: ["1", "4", "6"],
-  conditions: [
-    {
-      parameter: "payment.method",
-      compare: "equal",
-      value: "paytm",
-    },
-  ],
-  title: "Paytm Offer",
-  desc: "Get Flat Rs.70 off with Paytm",
-  userLimit: 4,
-  format: "PAYTM500",
-};
 const CouponCard = (props: Props) => {
+  const { coupon } = props;
   const isDynamic = coupon.conditions[0].parameter === "customer.customer_For";
   return (
     <div className="bg-white shadow-md rounded-md p-4 overflow-hidden dark:bg-gray-800 card-zoom1 justify-between">

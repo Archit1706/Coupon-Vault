@@ -28,12 +28,12 @@ const SkuCard = (props: Props) => {
         alt={`Product ${product.name}`}
       />
       <div className="px-2 py-2">
-        <div className="font-bold text-xl mb-2">Product Name: {product.name}</div>
-        <p className="text-gray-700 text-base">
+        <div className="font-bold text-xl mb-2 dark:text-gray-300">Product Name: {product.name}</div>
+        <p className="text-gray-700 text-base dark:text-gray-300">
           Category: {product.category}
         </p>
-        {/* <p className="text-gray-700 text-base">Cost: Rs. {product.cost}</p>
-        <p className="text-gray-700 text-base">SkuId : {product.skuId}</p> */}
+        <p className="text-gray-700 text-base dark:text-gray-300">Cost: Rs. {product.price}</p>
+        <p className="text-gray-700 text-base dark:text-gray-300">SkuId : {product.skuId}</p>
       </div>
       <div className="">
         <Link href={`/merchant/skues/${product.skuId}`} >

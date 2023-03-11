@@ -1,5 +1,9 @@
 import Login from "components/Login";
 import { getProviders } from "next-auth/react";
+
+import "react-toastify/dist/ReactToastify.css";
+
+import Typewriter from "typewriter-effect";
 import React from "react";
 type Props = {};
 interface Inputs {

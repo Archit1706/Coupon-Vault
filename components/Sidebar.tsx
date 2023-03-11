@@ -9,7 +9,7 @@ import { GiForkKnifeSpoon, GiHotMeal } from "react-icons/gi";
 import { TbListDetails } from "react-icons/tb";
 import { AiOutlineUser, AiOutlinePoweroff } from "react-icons/ai";
 
-import Logo from "../../assets/images/logo.png";
+import Logo from "assets/logo.png";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className="h-full fixed w-20 bg-gray-800 p-4">
             {/* logo */}
             <div className="flex flex-col justify-center items-center mb-12">
-                <img src={Logo} alt="logo" className="w-10 h-10" />
+                <img src={Logo.src} alt="logo" className="w-10 h-10" />
             </div>
 
             {/* menu items */}

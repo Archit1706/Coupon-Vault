@@ -26,9 +26,11 @@
   z-index: 1;
   top: 70px;
   background-color: #ffffff;
-  box-shadow: #565656;
   width: 40px;
+
 }
+
+
 
 /* .card::before {
   position: absolute;

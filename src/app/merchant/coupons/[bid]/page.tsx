@@ -54,8 +54,8 @@ const CouponIdDetails = ({ params }: any) => {
   return (
     <div>
       <div className="">
-        <div className="flex flex-col items-center py-12">
-          <div className="card shadow-lg">
+        <div className="flex flex-col items-center py-12 ">
+          <div className="card shadow-lg dark:bg-gray-300">
             <div className="main">
               <div className="co-img">
                 <img
