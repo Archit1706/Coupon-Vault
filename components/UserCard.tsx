@@ -44,20 +44,20 @@ const userCard = (props: Props) => {
         </p>
         <div className="mt-4 space-x-2 flex justify-between items-center">
           <div className="text-gray-600">
-            <span className="block">Total Spent : Rs. {data.Spent} </span>
-            <span className="block">Cluster No : {data.Clusters}</span>
-            <span className="block">
+            <span className="block dark:text-gray-400" >Total Spent : Rs. {data.Spent} </span>
+            <span className="block dark:text-gray-400">Cluster No : {data.Clusters}</span>
+            <span className="block dark:text-gray-400">
               Customer Since: {nanosecondsToDays(data.Customer_For)} Days
             </span>
           </div>
           <div className="text-gray-600">
-            <span className="block">
+            <span className="block dark:text-gray-400">
               Number of Deals Used: {data.NumDealsPurchases}
             </span>
-            <span className="block">
+            <span className="block dark:text-gray-400">
               Customer Last Visited: {data.Recency} Days Ago
             </span>
-            <span className="block">Customer Age: {data.Age} Years</span>
+            <span className="block dark:text-gray-400">Customer Age: {data.Age} Years</span>
           </div>
           <div className="text-gray-600"></div>
         </div>

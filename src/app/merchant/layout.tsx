@@ -2,6 +2,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+
+import {
+    MdDashboard,
+    MdSettingsSuggest,
+    MdOutlineMenuBook,
+} from "react-icons/md";
+import { GiForkKnifeSpoon, GiHotMeal } from "react-icons/gi";
+import { TbListDetails } from "react-icons/tb";
+import { AiOutlineUser, AiOutlinePoweroff } from "react-icons/ai";
+
 export default function Layout({ children }) {
     const [userImage, setUserImage] = useState(
         "https://www.cnet.com/a/img/resize/4bbb5d8eeffea0beb519f4f5a21192068d133c34/hub/2021/09/10/56cb167f-7bff-4076-9b00-d415067f5477/screenshot-2021-09-10-at-5-44-32-pm.png?auto=webp&fit=crop&height=900&width=1200"
@@ -108,8 +118,9 @@ export default function Layout({ children }) {
         </ul>
         
       </div>
-      <div className="w-[100%] overflow-y-scroll	">
-
+      
+      <div className="w-[100%] overflow-y-scroll pt-2">
+      <div className="dark:text-white">Path : {path.toString()}</div>
       {children}
     
       </div>

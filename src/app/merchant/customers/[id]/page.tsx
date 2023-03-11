@@ -33,8 +33,8 @@ const UserProfile = ({params}) => {
             <MdVerified/>
           </span>
         </div>
-        <p className="text-gray-700">
-          <span className="text-gray-500">Joined:</span> {getDateFromDays(nanosecondsToDays(user.Customer_For))}
+        <p className="text-gray-700 dark:text-gray-300">
+          <span className="text-gray-400 dark:text-gray-50 ">Joined:</span> {getDateFromDays(nanosecondsToDays(user.Customer_For))}
         </p>
 
         {/* <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -59,38 +59,38 @@ const UserProfile = ({params}) => {
             <ul className="mt-2 text-gray-700">
               <li className="flex border-b justify-between py-2">
                 <span className="font-bold w-24 dark:text-gray-300">Name:</span>
-                <span className="text-gray-700  ">Demo{user.id}</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400  ">Demo{user.id}</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b justify-between py-2">
                 <span className="font-bold w-24 dark:text-gray-300">Age:</span>
-                <span className="text-gray-700 ">{user.Age} Years</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400 ">{user.Age} Years</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b py-2 justify-between">
                 <span className="font-bold w-24 dark:text-gray-300">Total Spent Till Now:</span>
-                <span className="text-gray-700">Total of Rs. {user.Spent} Spent</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400">Total of Rs. {user.Spent} Spent</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b py-2 justify-between">
                 <span className="font-bold w-24 dark:text-gray-300">Customer Since:</span>
-                <span className="text-gray-700">{getDateFromDays(nanosecondsToDays(user.Customer_For))} ( {nanosecondsToDays(user.Customer_For) } Days from today)</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400">{getDateFromDays(nanosecondsToDays(user.Customer_For))} ( {nanosecondsToDays(user.Customer_For) } Days from today)</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b py-2 justify-between">
                 <span className="font-bold w-24 dark:text-gray-300">Cluster No:</span>
-                <span className="text-gray-700 ">Belongs to Cluster No : {user.Clusters}</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400 ">Belongs to Cluster No : {user.Clusters}</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b py-2 justify-between">
                 <span className="font-bold w-24 dark:text-gray-300 ">Number of Deals Made:</span>
-                <span className="text-gray-700">{user.NumDealsPurchases} Deals Made in Total</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400">{user.NumDealsPurchases} Deals Made in Total</span>
+                <span className="text-gray-400 "></span>
               </li>
               <li className="flex border-b py-2 justify-between">
                 <span className="font-bold w-24 dark:text-gray-300">Number Web Visites per Month:</span>
-                <span className="text-gray-700">{user.NumWebVisitsMonth} No of times visits per months</span>
-                <span className="text-gray-700 "></span>
+                <span className="text-gray-400">{user.NumWebVisitsMonth} No of times visits per months</span>
+                <span className="text-gray-400 "></span>
               </li>
             </ul>
           </div>
