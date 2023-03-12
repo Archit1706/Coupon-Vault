@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import "./styles.css";
-import Image from "next/image";
-
-import logo from "assets/logo.png";
+import logo from 'assets/logo.png';
+import Image from 'next/image';
 type Props = {};
 const coupon = {
     _id: { $oid: "640b77a52aeee1856cfde1fb" },
@@ -29,6 +28,36 @@ const coupon = {
     campainId: { $oid: "640b77a52aeee1856cfde1fb" },
     isStatic: true,
     isRedeemed: false,
+};
+interface Condition {
+  parameter: string;
+  compare: string;
+  value: string | number | boolean;
+}
+
+interface Coupon {
+  couponCode?: string;
+  customerId?: string;
+  creationDate: string;
+  expiryDate: string;
+  discountType: string;
+  discountAmt?: number;
+  discountPect?: number;
+  discountItem?: number;
+  freeItem?: string;
+  skuIds: string[];
+  conditions: Condition[];
+  title: string;
+  desc: string;
+  enabled: boolean;
+  redeemed?: boolean;
+  userLimit?: number;
+  campaign?: string;
+  format: string;
+  discount?: number;
+}
+type params = {
+  coupon: Coupon;
 };
 
 const CouponIdDetails = ({ params }: any) => {
@@ -170,6 +199,7 @@ const CouponIdDetails = ({ params }: any) => {
                             ) : (
                                 <></>
                             )}
+
 
                             <tr className="border-b bg-white dark:bg-gray-800">
                                 <th
