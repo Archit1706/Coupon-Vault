@@ -49,7 +49,7 @@ const onSubmitHandler = () => {
 
   return (
     <div className="p-20">
-        <h1 className="dark:text-white font-bold text-2xl">Create Static Coupon</h1>
+        <h1 className="dark:text-white font-bold text-2xl">Create Capaign</h1>
       <form onSubmit={onSubmitHandler}>
         <div className="relative z-0 w-full mb-6 group">
           <input

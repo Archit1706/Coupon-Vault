@@ -110,8 +110,7 @@ const CouponIdDetails = ({ params }: any) => {
         const message =
             "Hey, I have a coupon for you. Check it out! as you are loyalty customer of our store. You can redeem this coupon at our store. Coupon Code: " +
             coupon.couponCode +
-            " Coupon Value: " +
-            coupon.discount +
+            " Coupon Value: Rs.70" +
             " Valid till: " +
             coupon.expiryDate +
             " Thank You!";
@@ -124,8 +123,7 @@ const CouponIdDetails = ({ params }: any) => {
     const message =
         "Hey, I have a coupon for you. Check it out! as you are loyalty customer of our store. You can redeem this coupon at our store. Coupon Code: " +
         coupon.couponCode +
-        " Coupon Value: " +
-        coupon.discount +
+        " Coupon Value: Rs 70 " +
         " Valid till: " +
         coupon.expiryDate +
         " Thank You!";
