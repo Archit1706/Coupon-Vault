@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["dummyimage.com", "mf.b37mrtl.ru", "cdnn1.img.sputniknews.com"],
+    domains: ["dummyimage.com", "mf.b37mrtl.ru", "cdnn1.img.sputniknews.com", "leadershipmemphis.org"]
   },
 };
 

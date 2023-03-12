@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 import {
     MdDashboard,
@@ -10,7 +12,6 @@ import { TbListDetails } from "react-icons/tb";
 import { AiOutlineUser, AiOutlinePoweroff } from "react-icons/ai";
 
 import Logo from "assets/logo.png";
-import { Link } from "react-router-dom";
 
 const Sidebar = () => {
     const [selected, setSelected] = useState("dashboard");
@@ -19,7 +20,7 @@ const Sidebar = () => {
         <div className="h-full fixed w-20 bg-gray-800 p-4">
             {/* logo */}
             <div className="flex flex-col justify-center items-center mb-12">
-                <img src={Logo.src} alt="logo" className="w-10 h-10" />
+                <Image src={Logo.src} alt="logo" className="w-10 h-10" />
             </div>
 
             {/* menu items */}
