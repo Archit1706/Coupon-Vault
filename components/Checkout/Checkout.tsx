@@ -3,17 +3,20 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Checkout.css";
 import Coupon from "@/types/Coupon";
 import Product from "@/types/Product";
-import { campaigns, prods } from "staticProducts";
+// import { campaigns, prods } from "staticProducts";
 import { AppContext } from "../../context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+
+import { BiPlus, BiMinus } from "react-icons/bi";
 
 interface CheckoutProps {
     products: Product[];
 }
 
 const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
+    // console.log(props);
     const BASE_URL = "http://localhost:3000";
     const {
         context,
@@ -22,14 +25,18 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
         setCouponCode,
         coupons,
         setCoupons,
-        campaign,
-        setCampaign,
+        campaigns,
+        setCampaigns,
         discount,
         setDiscount,
         total,
         setTotal,
         couponValid,
         setCouponValid,
+        paymentMode,
+        setPaymentMode,
+        selectedCampaign,
+        setSelectedCampaign,
     } = useContext(AppContext);
     // console.log(data);
 
@@ -39,34 +46,87 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
             alert("Please enter a coupon code.");
             setCouponValid(false);
         } else {
+            const items = [];
+            props.products.map((product) => {
+                items.push({
+                    skuId: product.skuId,
+                    quantity: product.quantity,
+                });
+            });
+            console.log(items);
             try {
-                fetch(`${BASE_URL}/api/coupon/` + couponCode)
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                var requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: JSON.stringify({
+                        couponCode: couponCode,
+                        customerId: "1",
+                        items: items,
+                        paymentInfo: { amount: total, method: "gpay" },
+                    }),
+                    redirect: "follow",
+                };
+                fetch(
+                    "https://CouponVault.sidd065.repl.co/api/validate/redeem",
+                    requestOptions
+                )
                     .then((res) => res.json())
                     .then((data) => {
-                        if (data.length > 0) {
-                            setCoupons(data);
-                            setCouponValid(true);
-                            console.log("Coupon Valid");
-                            console.log(data);
-                            console.log(coupons);
-                        } else {
-                            alert("Invalid coupon code.");
-                            setCouponValid(false);
-                            console.log("Coupon Invalid");
-                        }
+                        console.log(data);
+                        setCouponValid(data.valid);
+                        setDiscount(total - data.total);
                     });
             } catch (err) {
-                alert("Invalid coupon code.");
+                // alert("Invalid coupon code.");
                 console.log(err);
                 setCouponValid(false);
                 console.log("Coupon Invalid");
             }
         }
-        console.log(e.target);
-        console.log("The link was clicked.");
+        if (couponValid) {
+            alert("Coupon Valid");
+        } else {
+            alert("Coupon Invalid");
+        }
+        // console.log(e.target);
+        // console.log("The link was clicked.");
     };
 
     const notify = () => toast("Wow so easy!");
+
+    const handleCampaignSelect = (e: any) => {
+        console.log(e.target.name);
+
+        setSelectedCampaign(e.target.name);
+        // console.log("Campaign selected");
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            id: selectedCampaign,
+            customerId: "1",
+        });
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        fetch(
+            "https://CouponVault.sidd065.repl.co/api/campaign/coupon",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => setCouponCode(result.data))
+            .catch((error) => console.log("error", error));
+    };
+
+    // console.log(paymentMode);
 
     useEffect(() => {
         setTotal(props.products.reduce((a, b) => a + b.quantity * b.price, 0));
@@ -133,23 +193,25 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                     <p> {product.category}</p>
                                                 </div>
 
-                                                <p className="text-gray-400">
+                                                <p className="text-gray-400 flex flex-row items-center">
                                                     <button
-                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee px-2 m-2 rounded-md"
+                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee p-1 m-2 rounded-md"
                                                         onClick={() =>
                                                             (product.quantity -= 1)
                                                         }
                                                     >
-                                                        -
+                                                        <BiMinus />
                                                     </button>
-                                                    {product.quantity}
+                                                    <p className="text-blue-700 font-semibold">
+                                                        {product.quantity}
+                                                    </p>
                                                     <button
-                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee px-2 m-2 rounded-md"
+                                                        className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee p-1 m-2 rounded-md"
                                                         onClick={() =>
                                                             (product.quantity += 1)
                                                         }
                                                     >
-                                                        +
+                                                        <BiPlus />
                                                     </button>
                                                 </p>
                                             </div>
@@ -170,46 +232,63 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     The Code is applied successfully!
                                 </p>
                             )}
-                            <div className="">
-                                <table className="w-full">
-                                    <th>Title</th>
-                                    <th>Discount</th>
-                                    <th>Description</th>
-                                    <th></th>
-                                    {campaigns.map((campaign) => {
-                                        return (
-                                            <tr key={campaign.id}>
-                                                <td>{campaign.title}</td>
-                                                {campaign.discountType === 1 ? (
-                                                    <td>
-                                                        {
-                                                            campaign.discount[
-                                                                "$numberInt"
-                                                            ]
-                                                        }
+                            <div className="p-4 border border-blue-500 rounded-md shadow-md">
+                                <table className="w-full text-left table-auto border-separate">
+                                    <thead className="border border-b-blue-500 w-full shadow-sm">
+                                        <th>Title</th>
+                                        <th>Discount</th>
+                                        <th className="hidden md:block">
+                                            Description
+                                        </th>
+                                        <th></th>
+                                    </thead>
+                                    {/* <hr className="border w-11/12 border-b-blue-500" /> */}
+                                    <tbody>
+                                        {campaigns.map((campaign) => {
+                                            return (
+                                                <tr key={campaign._id}>
+                                                    <td>{campaign.title}</td>
+                                                    {campaign.discountType ===
+                                                    "1" ? (
+                                                        <td>
+                                                            {"₹"}
+                                                            {campaign.discount}
+                                                        </td>
+                                                    ) : campaign.discountType ===
+                                                      "2" ? (
+                                                        <td>
+                                                            {
+                                                                campaign.discountPect
+                                                            }
+                                                            {"%"}
+                                                        </td>
+                                                    ) : campaign.discountType ===
+                                                      "3" ? (
+                                                        <td>{"Add Item"}</td>
+                                                    ) : (
+                                                        <td>{"Free Item"}</td>
+                                                    )}
+
+                                                    <td className="hidden md:block md:mt-2">
+                                                        {campaign.desc}
                                                     </td>
-                                                ) : campaign.discountType ===
-                                                  2 ? (
                                                     <td>
-                                                        {
-                                                            campaign
-                                                                .discountPect[
-                                                                "$numberInt"
-                                                            ]
-                                                        }
+                                                        <button
+                                                            // key={campaign.id}
+                                                            name={campaign._id}
+                                                            onClick={
+                                                                handleCampaignSelect
+                                                            }
+                                                            className="text-gray-200 bg-blue-500  text-md p-2 rounded-md shadow-md"
+                                                            title="Generate and Use!"
+                                                        >
+                                                            USE
+                                                        </button>
                                                     </td>
-                                                ) : (
-                                                    <td>{"Free Item"}</td>
-                                                )}
-                                                <td>{campaign.description}</td>
-                                                <td>
-                                                    <button className="text-gray-200 bg-blue-500 font-bold text-xl p-4 rounded-md shadow-md">
-                                                        Apply
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
                                 </table>
                             </div>
                             <div className="mb-6 pb-6 border-b border-gray-200">
@@ -351,14 +430,18 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             <input
                                                 type="radio"
                                                 className="form-radio h-5 w-5 text-indigo-500"
-                                                name="type"
                                                 id="type1"
+                                                value={1}
+                                                name="card"
+                                                onChange={() =>
+                                                    setPaymentMode(1)
+                                                }
                                             />
                                             <Image
                                                 src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
                                                 className="h-6 ml-3 aspect-video"
-                                                width={24}
-                                                height={24}
+                                                width={90}
+                                                height={32}
                                             />
                                         </label>
                                     </div>
@@ -490,7 +573,9 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                         <input
                                             type="radio"
                                             className="form-radio h-5 w-5 text-indigo-500"
-                                            name="type"
+                                            name="paytm"
+                                            value={2}
+                                            onChange={() => setPaymentMode(2)}
                                             id="type2"
                                         />
                                         <Image
@@ -509,7 +594,9 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                         <input
                                             type="radio"
                                             className="form-radio h-5 w-5 text-indigo-500"
-                                            name="type"
+                                            name="paytm"
+                                            value={3}
+                                            onChange={() => setPaymentMode(3)}
                                             id="type2"
                                         />
                                         <Image

@@ -6,6 +6,8 @@ import { prods } from "staticProducts";
 import banana from "assets/products/banana.jpeg";
 import apple from "assets/products/apple.jpeg";
 import oranges from "assets/products/oranges.jpeg";
+import tomatoes from "assets/products/tomatoes.jpeg";
+import carrot from "assets/products/carrot.jpeg";
 
 const coupon = [
     {
@@ -56,6 +58,25 @@ const page = () => {
             quantity: 2,
         },
         {
+            skuId: 8,
+            name: "Tomatoes",
+            category: "Vegetables",
+            description:
+                "A juicy, red fruit that is commonly used in many recipes.",
+            price: 324,
+            image: tomatoes,
+            quantity: 1,
+        },
+        {
+            skuId: 12,
+            name: "Carrots",
+            category: "Vegetables",
+            description: "A crunchy root vegetable that is high in vitamin A.",
+            price: 20,
+            image: carrot,
+            quantity: 1,
+        },
+        {
             skuId: 18,
             name: "Oranges",
             category: "Fruits",
@@ -67,7 +88,7 @@ const page = () => {
     ]);
     return (
         <div>
-            <Checkout products={products1Data} />
+            <Checkout products={products1Data} customerId={24} />
         </div>
     );
 };

@@ -31,25 +31,8 @@ import greenPeas from "assets/products/greenPeas.jpeg";
 export const AppContext = createContext();
 // import { getCoupons, getCampaigns } from "./apis";
 
+
 const AppProvider = ({ children }) => {
-  const [data, setData] = useState("Test Data");
-
-  const [couponCode, setCouponCode] = useState("");
-  const [couponValid, setCouponValid] = useState(false);
-
-  const [discount, setDiscount] = useState(0);
-
-  const [products, setProducts] = useState([]);
-  const getTotal = (products) => products.reduce((acc, item) => acc + item.quantity * item.price, 0);
-  const [price, setPrice] = useState(getTotal(products));
-  const discouuntedPrice = price - discount;
-
-  const [total, setTotal] = useState(0);
-
-  // const [coupons, setCoupons] = useState(getCoupons());
-
-  // const [campaigns, setCampaigns] = useState(getCampaigns());
-
 
   const [products1Data, setProducts1Data] = useState([
     {
@@ -198,6 +181,43 @@ const AppProvider = ({ children }) => {
     ]
   );
 
+  const [data, setData] = useState("Test Data");
+  const BASE_URL = 'https://CouponVault.sidd065.repl.co';
+
+  const [couponCode, setCouponCode] = useState("");
+  const [couponValid, setCouponValid] = useState(false);
+
+  const [discount, setDiscount] = useState(0);
+
+  const [products, setProducts] = useState([]);
+  const getTotal = (products) => products.reduce((acc, item) => acc + item.quantity * item.price, 0);
+  const [price, setPrice] = useState(getTotal(products));
+  const discouuntedPrice = price - discount;
+
+  const [total, setTotal] = useState(0);
+
+  const [coupons, setCoupons] = useState([]);
+
+  const [campaigns, setCampaigns] = useState([]);
+
+  const [paymentMode, setPaymentMode] = useState(1);
+
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+
+  const getCampaigns = () => {
+    var requestOptions = {
+      method: 'POST',
+      redirect: 'follow'
+    };
+
+    fetch("https://CouponVault.sidd065.repl.co/api/campaign/list", requestOptions)
+      .then(response => response.text())
+      .then(result => setCampaigns(JSON.parse(result)))
+      .catch(error => console.log('error', error));
+  };
+  getCampaigns();
+  // console.log(campaigns);
+
   return (
     <AppContext.Provider
       value={{
@@ -214,18 +234,22 @@ const AppProvider = ({ children }) => {
         discouuntedPrice,
         couponCode,
         setCouponCode,
-        // coupons,
-        // setCoupons,
-        // campaigns,
-        // setCampaigns,
-        products1Data,
-        // products2Data,
-        // products3Data,
-        setProducts1Data,
-        // setProducts2Data,
-        // setProducts3Data,
+        coupons,
+        setCoupons,
+        campaigns,
+        setCampaigns,
         total,
         setTotal,
+        paymentMode,
+        setPaymentMode,
+        selectedCampaign,
+        setSelectedCampaign,
+        products1Data,
+        products2Data,
+        products3Data,
+        setProducts1Data,
+        setProducts2Data,
+        setProducts3Data,
       }}
     >
       {children}

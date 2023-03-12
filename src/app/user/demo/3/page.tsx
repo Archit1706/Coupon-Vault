@@ -47,6 +47,7 @@ const page = () => {
                 "A starchy root vegetable that is commonly used in many recipes.",
             price: 50,
             image: potatoes,
+            quantity: 2,
         },
         {
             skuId: 8,
@@ -85,7 +86,7 @@ const page = () => {
                 "A pungent bulb vegetable that is commonly used in many recipes.",
             price: 67,
             image: onions,
-            quantity: 1,
+            quantity: 2,
         },
         {
             skuId: 19,
@@ -100,7 +101,7 @@ const page = () => {
     ]);
     return (
         <div>
-            <Checkout products={products1Data} />
+            <Checkout products={products1Data} customerId={24} />
         </div>
     );
 };

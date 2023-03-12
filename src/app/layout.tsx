@@ -25,12 +25,18 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <head>
-                <title>${name}</title>
+                <meta charSet="utf-8" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                />
+                <meta name="theme-color" content="#000000" />
+                <title>{name}</title>
             </head>
             <Script src="../path/to/flowbite/dist/flowbite.bundle.js"></Script>
             <body className="wrapper flex flex-col dark:bg-[#05091a]">
                 <div className="fixed w-screen bg-white dark:bg-[#05091a] z-10">
-                    <Navbar  />
+                    <Navbar />
                 </div>
                 <div className="h-screen">
                     <Providers>{children}</Providers>

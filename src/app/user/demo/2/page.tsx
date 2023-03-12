@@ -74,7 +74,7 @@ const page = () => {
             description: "A staple food made from the seeds of the rice plant.",
             price: 248,
             image: rice,
-            quantity: 1,
+            quantity: 3,
         },
         {
             skuId: 10,
@@ -94,12 +94,12 @@ const page = () => {
                 "A fermented dairy product that is high in protein and good bacteria.",
             price: 60,
             image: yogurt,
-            quantity: 1,
+            quantity: 2,
         },
     ]);
     return (
         <div>
-            <Checkout products={products1Data} />
+            <Checkout products={products1Data} customerId={0} />
         </div>
     );
 };
