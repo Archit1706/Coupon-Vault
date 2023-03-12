@@ -13,9 +13,12 @@ import { BiPlus, BiMinus } from "react-icons/bi";
 
 interface CheckoutProps {
     products: Product[];
+    customerId: number;
 }
 
 const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
+    const [_, update] = useState(1);
+
     // console.log(props);
     const BASE_URL = "http://localhost:3000";
     const {
@@ -51,6 +54,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                 items.push({
                     skuId: product.skuId,
                     quantity: product.quantity,
+                    category: product.category,
                 });
             });
             console.log(items);
@@ -62,9 +66,9 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                     headers: myHeaders,
                     body: JSON.stringify({
                         couponCode: couponCode,
-                        customerId: "1",
+                        customerId: props.customerId,
                         items: items,
-                        paymentInfo: { amount: total, method: "gpay" },
+                        paymentInfo: { amount: total, method: paymentMode },
                     }),
                     redirect: "follow",
                 };
@@ -76,8 +80,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                     .then((data) => {
                         console.log(data);
                         setCouponValid(data.valid);
-                        setDiscount(total - data.total);
-                    });
+                        alert(data.valid ? "Coupon Valid" : "Coupon Invalid");
+                        if (data.total !== null && data.total !== 0)
+                            setDiscount(total - data.total);
+                    })
+                    .then((res) => update(Math.random()));
             } catch (err) {
                 // alert("Invalid coupon code.");
                 console.log(err);
@@ -85,11 +92,12 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                 console.log("Coupon Invalid");
             }
         }
-        if (couponValid) {
-            alert("Coupon Valid");
-        } else {
-            alert("Coupon Invalid");
-        }
+        // if (couponValid) {
+        //     alert("Coupon Valid");
+        // } else {
+        //     alert("Coupon Invalid");
+        //     console.log("Coupon Invalid");
+        // }
         // console.log(e.target);
         // console.log("The link was clicked.");
     };
@@ -107,7 +115,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
 
         var raw = JSON.stringify({
             id: selectedCampaign,
-            customerId: "1",
+            customerId: props.customerId,
         });
 
         var requestOptions = {
@@ -128,9 +136,16 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
 
     // console.log(paymentMode);
 
+    const paymentToggle = (e: any) => {
+        console.log(e.target.name);
+        setPaymentMode(e.target.name);
+    };
+
     useEffect(() => {
         setTotal(props.products.reduce((a, b) => a + b.quantity * b.price, 0));
-    }, []);
+        console.log(paymentMode);
+    }, [props.products]);
+
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
             <div className="px-5">
@@ -227,11 +242,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </div>
                                 );
                             })}
-                            {couponValid && (
-                                <p className="">
-                                    The Code is applied successfully!
-                                </p>
-                            )}
+
                             <div className="p-4 border border-blue-500 rounded-md shadow-md">
                                 <table className="w-full text-left table-auto border-separate">
                                     <thead className="border border-b-blue-500 w-full shadow-sm">
@@ -291,6 +302,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </tbody>
                                 </table>
                             </div>
+                            {couponValid && (
+                                <p className="">
+                                    The Code is applied successfully!
+                                </p>
+                            )}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -357,7 +373,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </div>
                                 </div>
 
-                                {couponValid && (
+                                {couponValid && discount !== 0 && (
                                     <div className="w-full flex items-center">
                                         <div className="flex-grow">
                                             <span className="text-gray-600">
@@ -430,12 +446,12 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             <input
                                                 type="radio"
                                                 className="form-radio h-5 w-5 text-indigo-500"
-                                                id="type1"
-                                                value={1}
+                                                id="type2"
+                                                value="card"
                                                 name="card"
-                                                onChange={() =>
-                                                    setPaymentMode(1)
-                                                }
+                                                disabled
+                                                checked={false}
+                                                // onChange={paymentToggle}
                                             />
                                             <Image
                                                 src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
@@ -574,8 +590,13 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             type="radio"
                                             className="form-radio h-5 w-5 text-indigo-500"
                                             name="paytm"
-                                            value={2}
-                                            onChange={() => setPaymentMode(2)}
+                                            value="paytm"
+                                            onChange={paymentToggle}
+                                            checked={
+                                                paymentMode === "paytm"
+                                                    ? true
+                                                    : false
+                                            }
                                             id="type2"
                                         />
                                         <Image
@@ -594,9 +615,14 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                         <input
                                             type="radio"
                                             className="form-radio h-5 w-5 text-indigo-500"
-                                            name="paytm"
-                                            value={3}
-                                            onChange={() => setPaymentMode(3)}
+                                            name="gpay"
+                                            value="gpay"
+                                            onChange={paymentToggle}
+                                            checked={
+                                                paymentMode === "gpay"
+                                                    ? true
+                                                    : false
+                                            }
                                             id="type2"
                                         />
                                         <Image

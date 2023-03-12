@@ -1,91 +1,160 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import "./styles.css";
-import logo from 'assets/logo.png';
-import Image from 'next/image';
+import logo from "assets/logo.png";
+import Image from "next/image";
+import emailjs from "@emailjs/browser";
+import { BsWhatsapp } from "react-icons/bs";
+
+import "react-toastify/dist/ReactToastify.css";
+
+import { toast, ToastContainer } from "react-toastify";
 type Props = {};
-const coupon = {
-    _id: { $oid: "640b77a52aeee1856cfde1fb" },
-    name: "Hot Promotion",
-    code: "HOT-$$$-123123123",
-    startDate: "2023-03-04",
-    endDate: "Inf",
-    couponCount: "1000",
-    enabled: false,
-    discountType: "1",
-    discount: { $numberInt: "100" },
-    discountPect: { $numberInt: "10" },
-    SKUs: [],
-    conditions: [{ parameter: "cart.value", compare: "greater", value: "999" }],
-    redemption: { $numberInt: "142" },
-    title: "Hot Promotion",
-    desc: "Get flat Rs.100 off on orders above Rs.999",
-    createdAt: { $date: { $numberLong: "1678473125291" } },
-    updatedAt: { $date: { $numberLong: "1678473125291" } },
-    __v: { $numberInt: "0" },
-    format: "HOT-$$$",
-    campainId: { $oid: "640b77a52aeee1856cfde1fb" },
-    isStatic: true,
-    isRedeemed: false,
-};
+
 interface Condition {
-  parameter: string;
-  compare: string;
-  value: string | number | boolean;
+    parameter: string;
+    compare: string;
+    value: string | number | boolean;
 }
 
 interface Coupon {
-  couponCode?: string;
-  customerId?: string;
-  creationDate: string;
-  expiryDate: string;
-  discountType: string;
-  discountAmt?: number;
-  discountPect?: number;
-  discountItem?: number;
-  freeItem?: string;
-  skuIds: string[];
-  conditions: Condition[];
-  title: string;
-  desc: string;
-  enabled: boolean;
-  redeemed?: boolean;
-  userLimit?: number;
-  campaign?: string;
-  format: string;
-  discount?: number;
+    couponCode?: string;
+    customerId?: string;
+    creationDate: string;
+    expiryDate: string;
+    discountType: string;
+    discountAmt?: number;
+    discountPect?: number;
+    discountItem?: number;
+    freeItem?: string;
+    skuIds: string[];
+    conditions: Condition[];
+    title: string;
+    desc: string;
+    enabled: boolean;
+    redeemed?: boolean;
+    userLimit?: number;
+    campaign?: string;
+    format: string;
+    discount?: number;
+    createdAt: string;
 }
 type params = {
-  coupon: Coupon;
+    bid: string;
 };
 
 const CouponIdDetails = ({ params }: any) => {
-    function nanosecondsToDays(nanoseconds) {
-        const seconds = nanoseconds / 1000000000;
-        const days = seconds / 86400;
-        return days;
-    }
-    function getDateFromDays(days) {
-        const date = new Date();
-        date.setDate(date.getDate() - days);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
+    const [mobile, setMobile] = useState("");
+
+    const forms = useRef();
+    const to_name = "User";
+    const email = "architrathod77@gmail.com";
+    const from_name = "Coupon Vault";
 
     const bid = params["bid"];
     const isOwner = false;
-    const [copy, setCopy] = React.useState(false);
+    const [list, setList] = useState([]);
+    const handleQuery = () => {
+        const url =
+            "https://CouponVault.sidd065.repl.co/api/coupon/static/list";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setList(data);
+            });
+    };
+
+    useEffect(() => {
+        handleQuery();
+
+        console.log("list", list);
+    }, []);
+
+    if (!list) return <div>Loading...</div>;
+    const coupon: Coupon = list.filter((item) => item.couponCode === bid)[0];
+    console.log("coupon", coupon);
+
+    if (coupon === undefined) return <div>Loading</div>;
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+        toast("Sending Email...");
+        console.log("Run");
+        emailjs
+            .sendForm(
+                "service_xuw0qvq",
+                "template_v6r31lq",
+                forms.current,
+                "ofA0AhGQztY1881q-"
+            )
+
+            .then(
+                (result) => {
+                    toast.success("Email Sent Successfully");
+                },
+                (error) => {
+                    console.log("d");
+                    console.log(forms.current);
+                }
+            );
+    };
+
+    const handleWhatsapp = async () => {
+        const message =
+            "Hey, I have a coupon for you. Check it out! as you are loyalty customer of our store. You can redeem this coupon at our store. Coupon Code: " +
+            coupon.couponCode +
+            " Coupon Value: " +
+            coupon.discount +
+            " Valid till: " +
+            coupon.expiryDate +
+            " Thank You!";
+        const url =
+            "https://ca1f-2409-40c0-59-5878-48e7-1857-f63e-a63b.in.ngrok.io/send_message/hellower/+918805078063";
+        const a = await fetch(url);
+        console.log(a);
+    };
+
+    const message =
+        "Hey, I have a coupon for you. Check it out! as you are loyalty customer of our store. You can redeem this coupon at our store. Coupon Code: " +
+        coupon.couponCode +
+        " Coupon Value: " +
+        coupon.discount +
+        " Valid till: " +
+        coupon.expiryDate +
+        " Thank You!";
+
     return (
         <div>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="">
                 <div className="flex flex-col items-center py-12 ">
                     <div className="card shadow-lg dark:bg-gray-300">
                         <div className="main">
                             <div className="co-img">
-                                <Image src={logo.src} alt="" />
+                                <Image
+                                    src={logo.src}
+                                    alt=""
+                                    width={100}
+                                    height={100}
+                                />
                             </div>
                             <div className="vertical"></div>
                             <div className="content">
@@ -96,9 +165,9 @@ const CouponIdDetails = ({ params }: any) => {
                                 <p>
                                     Valid till{" "}
                                     {coupon.endDate === "Inf" ? (
-                                        <>Marne Tak</>
+                                        <>Unlimited</>
                                     ) : (
-                                        <>coupon.endDate</>
+                                        <>{coupon.expiryDate}</>
                                     )}
                                 </p>
                             </div>
@@ -108,12 +177,14 @@ const CouponIdDetails = ({ params }: any) => {
                                 id="copyvalue"
                                 type="text"
                                 readOnly
-                                value={coupon.code}
+                                value={coupon.couponCode}
                             />
                             <button
                                 className="copybtn"
                                 onClick={() =>
-                                    navigator.clipboard.writeText(coupon.code)
+                                    navigator.clipboard.writeText(
+                                        coupon.couponCode
+                                    )
                                 }
                             >
                                 COPY
@@ -121,6 +192,41 @@ const CouponIdDetails = ({ params }: any) => {
                         </div>
                     </div>
                 </div>
+                <div className="justify-center items-center flex pb-4 gap-4">
+                    <form ref={forms} onSubmit={sendEmail}>
+                        <input type="hidden" name="to_name" value={to_name} />
+                        <input
+                            type="hidden"
+                            name="from_name"
+                            value={from_name}
+                        />
+
+                        <input type="hidden" name="message" value={message} />
+                        <input type="hidden" name="email" value={email} />
+                        {/* <input type="text" hidden name="email" value={email} onChange={(e)=>
+                setEmail(e.target.value) } placeholder="Enter Email" className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" /> */}
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            type="submit"
+                        >
+                            Gift Coupon By Email
+                        </button>
+                    </form>
+                </div>
+
+                <div className="justify-center items-center flex pb-4 gap-4">
+                    <a
+                        onClick={() => toast.success("Message Sent...")}
+                        href={`https://ca1f-2409-40c0-59-5878-48e7-1857-f63e-a63b.in.ngrok.io/send_message/${message}/+918805078063`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Gift Coupon By WhatsApp
+                        </button>
+                    </a>
+                </div>
+
                 <div className="relative overflow-x-auto px-4 rounded-lg ">
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2 rounded-lg">
                         <tbody>
@@ -142,10 +248,7 @@ const CouponIdDetails = ({ params }: any) => {
                                 >
                                     Discount Value
                                 </th>
-                                <td className="px-6 py-4">
-                                    {" "}
-                                    Rs {coupon.discountPect.$numberInt}
-                                </td>
+                                <td className="px-6 py-4"> Rs 70</td>
                             </tr>
                             <tr className="border-b bg-white dark:bg-gray-800">
                                 <th
@@ -200,7 +303,6 @@ const CouponIdDetails = ({ params }: any) => {
                                 <></>
                             )}
 
-
                             <tr className="border-b bg-white dark:bg-gray-800">
                                 <th
                                     scope="row"
@@ -235,11 +337,7 @@ const CouponIdDetails = ({ params }: any) => {
                                     Created At
                                 </th>
                                 <td className="px-6 py-4">
-                                    {getDateFromDays(
-                                        nanosecondsToDays(
-                                            coupon.createdAt.$date.$numberLong
-                                        )
-                                    )}
+                                    {coupon.createdAt}
                                 </td>
                             </tr>
 

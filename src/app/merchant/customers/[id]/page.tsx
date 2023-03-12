@@ -5,7 +5,6 @@ import { users } from "../customers";
 import Image from "next/image";
 
 type Props = {};
-import Image from "next/image";
 const UserProfile = ({ params }) => {
     const bid = params["id"];
     const user = users[bid];

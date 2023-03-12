@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Navbar as Nav } from "flowbite-react";
+import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { name } from "staticProducts";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import Logo from "assets/logo.png";
+import person from "assets/person.png";
+
 import { GiWallet } from "react-icons/gi";
 type Props = {
     // session: Session | null;
@@ -134,10 +136,15 @@ const Navbar = ({}: Props) => {
                             {/* <Nav.Toggle className="" /> */}
                         </span>
                         <div className="">
-                            {session ? (
+                            {true ? (
                                 // <MenuDropdown session={session} />
                                 // <hr />
-                                <div></div>
+                                <Image
+                                    src={person.src}
+                                    alt="avatar"
+                                    height={40}
+                                    width={40}
+                                />
                             ) : (
                                 <button
                                     onClick={() => router.push("/login")}

@@ -200,7 +200,8 @@ const AppProvider = ({ children }) => {
 
   const [campaigns, setCampaigns] = useState([]);
 
-  const [paymentMode, setPaymentMode] = useState(1);
+  const [paymentMode, setPaymentMode] = useState("");
+
 
   const [selectedCampaign, setSelectedCampaign] = useState(null);
 

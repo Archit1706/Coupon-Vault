@@ -58,16 +58,6 @@ const page = () => {
             quantity: 2,
         },
         {
-            skuId: 8,
-            name: "Tomatoes",
-            category: "Vegetables",
-            description:
-                "A juicy, red fruit that is commonly used in many recipes.",
-            price: 324,
-            image: tomatoes,
-            quantity: 1,
-        },
-        {
             skuId: 12,
             name: "Carrots",
             category: "Vegetables",

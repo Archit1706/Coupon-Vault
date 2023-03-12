@@ -9,6 +9,7 @@ import carrot from "assets/products/carrot.jpeg";
 import spinach from "assets/products/spinach.jpeg";
 import onions from "assets/products/onions.jpeg";
 import greenPeas from "assets/products/greenPeas.jpeg";
+import peanutButter from "assets/products/peanutButter.jpeg";
 
 const coupon = [
     {
@@ -58,6 +59,16 @@ const page = () => {
             price: 324,
             image: tomatoes,
             quantity: 1,
+        },
+        {
+            skuId: 20,
+            name: "Peanut butter",
+            category: "Spreads",
+            description:
+                "A spread made from ground peanuts that is high in protein and healthy fats.",
+            price: 148,
+            image: peanutButter,
+            quantity: 2,
         },
         {
             skuId: 12,
