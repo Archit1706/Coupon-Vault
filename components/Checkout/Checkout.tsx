@@ -80,7 +80,12 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                     .then((data) => {
                         console.log(data);
                         setCouponValid(data.valid);
-                        alert(data.valid ? "Coupon Valid" : "Coupon Invalid");
+                        // alert(data.valid ? "Coupon Valid" : "Coupon Invalid");
+                        {
+                            data.valid
+                                ? toast.success("Coupon Valid")
+                                : toast.error("Coupon Invalid");
+                        }
                         if (data.total !== null && data.total !== 0)
                             setDiscount(total - data.total);
                     })
@@ -148,6 +153,18 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
 
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="px-5">
                 <div className="mb-2">
                     <a
