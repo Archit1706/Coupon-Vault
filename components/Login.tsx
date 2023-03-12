@@ -5,8 +5,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm, SubmitHandler, LiteralUnion } from "react-hook-form";
-import { BsGithub } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
 import { toast, ToastContainer } from "react-toastify";
 
 import Typewriter from "typewriter-effect";

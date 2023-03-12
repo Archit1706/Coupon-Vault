@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import "./styles.css";
 import logo from 'assets/logo.png';
+import Image from 'next/image';
 type Props = {};
 const coupon = {
   _id: { $oid: "640b77a52aeee1856cfde1fb" },
@@ -28,11 +29,41 @@ const coupon = {
   isStatic: true,
   isRedeemed: false,
 };
+interface Condition {
+  parameter: string;
+  compare: string;
+  value: string | number | boolean;
+}
+
+interface Coupon {
+  couponCode?: string;
+  customerId?: string;
+  creationDate: string;
+  expiryDate: string;
+  discountType: string;
+  discountAmt?: number;
+  discountPect?: number;
+  discountItem?: number;
+  freeItem?: string;
+  skuIds: string[];
+  conditions: Condition[];
+  title: string;
+  desc: string;
+  enabled: boolean;
+  redeemed?: boolean;
+  userLimit?: number;
+  campaign?: string;
+  format: string;
+  discount?: number;
+}
+type params = {
+  coupon: Coupon;
+};
 
 
 const CouponIdDetails = ({ params }: any) => {
 
-
+  console.log(params.coupon);
   function nanosecondsToDays(nanoseconds) {
     const seconds = nanoseconds / 1000000000;
     const days = seconds / 86400;
@@ -58,9 +89,11 @@ const CouponIdDetails = ({ params }: any) => {
           <div className="card shadow-lg dark:bg-gray-300">
             <div className="main">
               <div className="co-img">
-                <img
+                <Image
                   src={logo.src}
-                  alt=""
+                  alt="asdf"
+                  width={100}
+                  height={100}
                 />
               </div>
               <div className="vertical"></div>
@@ -71,8 +104,8 @@ const CouponIdDetails = ({ params }: any) => {
                 </h1>
                 <p>
                   Valid till{" "}
-                  {coupon.endDate === "Inf" ? (
-                    <>Marne Tak</>
+                  {coupon.endDate == 'inf' ? (
+                    <>Unlimited</>
                   ) : (
                     <>coupon.endDate</>
                   )}

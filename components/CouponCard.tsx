@@ -3,50 +3,59 @@ import React from "react";
 import { RiCoupon4Fill } from "react-icons/ri";
 
 import "flowbite";
+interface Condition {
+  parameter: string;
+  compare: string;
+  value: string | number | boolean;
+}
+
 interface Coupon {
-  couponCode: string;
+  couponCode?: string;
+  customerId?: string;
   creationDate: string;
   expiryDate: string;
   discountType: string;
-  discountAmt: number;
-  discountPect: number;
-  discountItem: number;
-  freeItem: string;
-  enabled: boolean;
+  discountAmt?: number;
+  discountPect?: number;
+  discountItem?: number;
+  freeItem?: string;
   skuIds: string[];
-  conditions: {
-    parameter: string;
-    compare: string;
-    value: string;
-  }[];
+  conditions: Condition[];
   title: string;
   desc: string;
-  userLimit: number;
+  enabled: boolean;
+  redeemed?: boolean;
+  userLimit?: number;
+  campaign?: string;
   format: string;
+  discount?: number;
 }
 
 type Props = {
-  coupon: Coupon;
+  data: Coupon;
 };
 
 const CouponCard = (props: Props) => {
-  const { coupon } = props;
-  const isDynamic = coupon.conditions[0].parameter === "customer.customer_For";
+  const coupon = props.data;
+  const isDynamic = coupon?.customerId  ? true : false;
+
   return (
     <div className="bg-white shadow-md rounded-md p-4 overflow-hidden dark:bg-gray-800 card-zoom1 justify-between">
       <div>
         <div className="flex items-center mb-4 justify-between">
           <div className="flex flex-row items center space-x-2">
             <RiCoupon4Fill className="text-blue-400  text-start w-8 h-8 " />
-            <Link href={`merchant/coupons/${coupon.couponCode}`}>
+            <Link href={{pathname : `merchant/coupons/${coupon?.couponCode ? coupon.couponCode : coupon.campaign}` ,
+              query: {coupon: JSON.stringify(coupon)}}}
+            >
               {" "}
               <h3 className="text-lg font-semibold dark:text-white ">
-                {coupon.couponCode}
+                {coupon.title}
               </h3>
             </Link>
           </div>
           <div className="">
-            <Link href={`/merchant/skues/`}>
+            <Link href={`merchant/coupons/${coupon?.couponCode ? coupon.couponCode : coupon.campaign}`}>
               {isDynamic ? (
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">
                   Dynamic Coupon
@@ -62,22 +71,23 @@ const CouponCard = (props: Props) => {
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="text-gray-600">
+        <div className="text-gray-600 dark:text-gray-300">
           <span className="text-lg font-semibold">
-            $20 off the entire order
+            {coupon.desc}
           </span>
         </div>
       </div>
       <div className="mt-4 flex justify-between items-center">
-        <div className="text-gray-600">
-          <span className="block">Redemption limit: unlimited</span>
-          <span className="block">Redeemed quantity: 0</span>
-          <span className="block">Timeframe: 03/10/2023 13:28:21</span>
+        <div className="text-gray-600 dark:text-gray-400">
+          <span className="block">Redemption limit: {coupon?.userLimit  ?  coupon.userLimit : 'unlimited'}</span>
+          <span className="block">Format : {coupon.format}</span>
+          <span className="block">Timeframe: {coupon.expiryDate}</span>
         </div>
 
         <div>
           <div className="pl-10">
             <label className="relative inline-flex items-center cursor-pointer ">
+              
               {coupon.enabled ? (
                 <div>
                   {" "}
@@ -97,7 +107,7 @@ const CouponCard = (props: Props) => {
               )}
             </label>
           </div>
-          <span className="block text-sm">Apply to whole cart</span>
+          <span className="block text-sm font-bold dark:text-gray-200">Status of Coupon</span>
         </div>
       </div>
     </div>
