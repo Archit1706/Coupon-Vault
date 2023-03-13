@@ -155,7 +155,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
             <ToastContainer
                 position="bottom-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -319,11 +319,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </tbody>
                                 </table>
                             </div>
-                            {couponValid && (
+                            {/* {couponValid && (
                                 <p className="">
                                     The Code is applied successfully!
                                 </p>
-                            )}
+                            )} */}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
