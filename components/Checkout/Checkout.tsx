@@ -50,7 +50,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
             toast("Please enter a coupon code.");
             setCouponValid(false);
         } else {
-            const items = [];
+            const items: any[] = [];
             props.products.map((product) => {
                 items.push({
                     skuId: product.skuId,
