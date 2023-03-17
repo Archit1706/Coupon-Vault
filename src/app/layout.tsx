@@ -33,17 +33,17 @@ export default async function RootLayout({
                 <meta name="theme-color" content="#000000" />
                 <title>{name}</title>
             </head>
-            <Script src="../path/to/flowbite/dist/flowbite.bundle.js"></Script>
-            <body className="wrapper flex flex-col dark:bg-[#05091a]">
-                <div className="fixed w-screen bg-white dark:bg-[#05091a] z-10">
-                    <Navbar />
-                </div>
-                <div className="h-screen">
-                    <Providers>{children}</Providers>
-                </div>
-                <div className="w-screen  bg-white dark:bg-[#05091a] z-10">
-                    {/* <Footer /> */}
-                </div>
+            {/* <Script src="../path/to/flowbite/dist/flowbite.bundle.js"></Script> */}
+            <body className="wrapper flex flex-col">
+                <Providers>
+                    <section className="fixed w-screen bg-white dark:bg-[#05091a] z-10">
+                        <Navbar />
+                    </section>
+                    <div className="">{children}</div>
+                    <div className="w-screen bg-white z-10">
+                        <Footer />
+                    </div>
+                </Providers>
             </body>
         </html>
     );

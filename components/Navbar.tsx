@@ -79,11 +79,11 @@ const Navbar = ({}: Props) => {
     //   }
     // };
     return (
-        <div className="max-w-[1420px] mx-auto flex justify-center items-center sticky top-0 z-20">
+        <section className="max-w-[1420px] mx-auto flex justify-center items-center sticky top-0 z-20">
             <Nav
                 // fluid={true}
                 rounded={true}
-                className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 w-full z-20 border-b border-gray-300 dark:border-gray-600"
+                className="bg-white px-2 sm:px-4 py-2.5 w-full z-20 border-b border-gray-300 dark:border-gray-600"
             >
                 <div className="container flex flex-wrap items-center justify-between mx-auto">
                     <Nav.Brand
@@ -92,7 +92,10 @@ const Navbar = ({}: Props) => {
                     >
                         <GiWallet className="h-8 w-8 mr-3 dark:bg-white dark:text-gray-900 rounded bg-gray-900 text-white" />
 
-                        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                        <span
+                            className="self-center text-2xl font-extrabold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-blue-500
+                            to-yellow-400 via-green-300"
+                        >
                             {name}
                         </span>
                     </Nav.Brand>
@@ -157,7 +160,7 @@ const Navbar = ({}: Props) => {
                     </div>
                 </div>
             </Nav>
-        </div>
+        </section>
     );
 };
 

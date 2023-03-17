@@ -149,7 +149,7 @@ const CouponIdDetails = ({ params }: any) => {
                             <div className="co-img">
                                 <Image
                                     src={logo.src}
-                                    alt=""
+                                    alt="Logo"
                                     width={100}
                                     height={100}
                                 />
