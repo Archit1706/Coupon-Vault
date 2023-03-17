@@ -4,7 +4,7 @@ import React,{useState} from "react";
 type Props = {};
 
 const CreateCampaign = (props: Props) => {
-    const [code, couponCode] = useState("Paytm Offer");
+  const [name, setName] = useState("");
 const [creationDate, setCreationDate] = useState("2023-03-11");
 const [expiryDate, setExpiryDate] = useState("2023-03-21");
 const [couponCount, setCouponCount] = useState(600);
@@ -23,8 +23,16 @@ const [format, setFormat] = useState("Fresh10-%*%");
 
 
 const onSubmitHandler = () => {
+    const conArray=[];
+    const temp = conditions.split(',');
+    const skuArray = skuIds.split(', ');
+    for (const i of temp){
+      const j = i.trim().split(' ');
+      if(j.length==3){
+        conArray.push({parameter:j[0],compare:j[1],value:j[2]});
+      }
+    }
     const a = {
-        "couponCode": code,
         "creationDate": creationDate,
         "expiryDate": expiryDate,
         "couponCount": couponCount,
@@ -33,8 +41,8 @@ const onSubmitHandler = () => {
         "discountPect": discountPect,
         "discountItem": discountItem,
         "freeItem": freeItem,
-        "skuIds": skuIds,
-        "conditions": conditions,
+        "skuIds": skuArray,
+        "conditions": conArray,
         "title": title,
         "desc": desc,
         "userLimit": userLimit,
@@ -89,7 +97,7 @@ const onSubmitHandler = () => {
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
             <input
-              type="text"
+              type="number"
               name="coouponCount"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder="Coupon Count"
@@ -138,7 +146,7 @@ const onSubmitHandler = () => {
           </div>
           <div className="relative z-0 w-full mb-6 group">
             <input
-              type="number"
+              type="text"
               name="dicountItem"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder="Discount Value"
