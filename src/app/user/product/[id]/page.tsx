@@ -2,6 +2,7 @@
 import React from "react";
 // import { useRouter } from "next/navigation";
 import { prods } from "../../../../../staticProducts";
+import Image from "next/image";
 
 const page = ({ params }: any) => {
     const { id } = params["id"];

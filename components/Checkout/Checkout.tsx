@@ -30,6 +30,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
         setCoupons,
         campaigns,
         setCampaigns,
+        getCampaigns,
         discount,
         setDiscount,
         total,
@@ -46,10 +47,10 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
     const handleClick = (e: any) => {
         e.preventDefault();
         if (couponCode.length < 0) {
-            alert("Please enter a coupon code.");
+            toast("Please enter a coupon code.");
             setCouponValid(false);
         } else {
-            const items = [];
+            const items: any[] = [];
             props.products.map((product) => {
                 items.push({
                     skuId: product.skuId,
@@ -80,7 +81,12 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                     .then((data) => {
                         console.log(data);
                         setCouponValid(data.valid);
-                        alert(data.valid ? "Coupon Valid" : "Coupon Invalid");
+                        // alert(data.valid ? "Coupon Valid" : "Coupon Invalid");
+                        {
+                            data.valid
+                                ? toast.success("Coupon Valid")
+                                : toast.error("Coupon Invalid");
+                        }
                         if (data.total !== null && data.total !== 0)
                             setDiscount(total - data.total);
                     })
@@ -142,12 +148,25 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
     };
 
     useEffect(() => {
-        setTotal(props.products.reduce((a, b) => a + b.quantity * b.price, 0));
+        setTotal(props.products.reduce((a, b) => a + b.quantity! * b.price, 0));
         console.log(paymentMode);
+        getCampaigns();
     }, [props.products]);
 
     return (
         <div className="min-w-screen min-h-screen pt-16 bg-gray-50 py-5">
+            <ToastContainer
+                position="bottom-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="px-5">
                 <div className="mb-2">
                     <a
@@ -194,7 +213,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
                                                 <Image
                                                     src={product.image.src}
-                                                    alt=""
+                                                    alt={product.name}
                                                     width={64}
                                                     height={64}
                                                 />
@@ -208,7 +227,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                     <p> {product.category}</p>
                                                 </div>
 
-                                                <p className="text-gray-400 flex flex-row items-center">
+                                                <div className="text-gray-400 flex flex-row items-center">
                                                     <button
                                                         className="bg-blue-400 text-black font-bold text-xl hover:border-blue-600 hover:bordee p-1 m-2 rounded-md"
                                                         onClick={() =>
@@ -228,7 +247,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                     >
                                                         <BiPlus />
                                                     </button>
-                                                </p>
+                                                </div>
                                             </div>
                                             <div>
                                                 <span className="font-semibold text-gray-600 text-xl">
@@ -246,12 +265,14 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                             <div className="p-4 border border-blue-500 rounded-md shadow-md">
                                 <table className="w-full text-left table-auto border-separate">
                                     <thead className="border border-b-blue-500 w-full shadow-sm">
-                                        <th>Title</th>
-                                        <th>Discount</th>
-                                        <th className="hidden md:block">
-                                            Description
-                                        </th>
-                                        <th></th>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Discount</th>
+                                            <th className="hidden md:block">
+                                                Description
+                                            </th>
+                                            <th></th>
+                                        </tr>
                                     </thead>
                                     {/* <hr className="border w-11/12 border-b-blue-500" /> */}
                                     <tbody>
@@ -302,11 +323,11 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                     </tbody>
                                 </table>
                             </div>
-                            {couponValid && (
+                            {/* {couponValid && (
                                 <p className="">
                                     The Code is applied successfully!
                                 </p>
-                            )}
+                            )} */}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -458,6 +479,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                                 className="h-6 ml-3 aspect-video"
                                                 width={90}
                                                 height={32}
+                                                alt="Visa"
                                             />
                                         </label>
                                     </div>
@@ -603,6 +625,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg"
                                             width={80}
                                             height={24}
+                                            alt="Paytm"
                                             className="ml-3 aspect-video"
                                         />
                                     </label>
@@ -629,6 +652,7 @@ const Checkout: React.FC<CheckoutProps> = (props: CheckoutProps) => {
                                             src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
                                             width={80}
                                             height={24}
+                                            alt="Google Pay"
                                             className="ml-3 aspect-video"
                                         />
                                     </label>

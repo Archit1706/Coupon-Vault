@@ -216,7 +216,7 @@ const AppProvider = ({ children }) => {
       .then(result => setCampaigns(JSON.parse(result)))
       .catch(error => console.log('error', error));
   };
-  getCampaigns();
+  // getCampaigns();
   // console.log(campaigns);
 
   return (
@@ -239,6 +239,7 @@ const AppProvider = ({ children }) => {
         setCoupons,
         campaigns,
         setCampaigns,
+        getCampaigns,
         total,
         setTotal,
         paymentMode,

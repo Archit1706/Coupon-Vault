@@ -37,7 +37,7 @@ const coupon = [
 ];
 
 const page = () => {
-    const [products1Data, setProducts1Data] = useState([
+    const products1Data = [
         {
             skuId: 1,
             name: "Banana",
@@ -75,7 +75,7 @@ const page = () => {
             image: oranges,
             quantity: 1,
         },
-    ]);
+    ];
     return (
         <div>
             <Checkout products={products1Data} customerId={24} />
