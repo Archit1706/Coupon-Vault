@@ -1,4 +1,4 @@
-# CouponVault
+# CouponVault [Live](https://coupon-vault.vercel.app/)
 
 Promotions are an essential part of any business strategy. They help in increasing customer engagement and drive sales.
 
